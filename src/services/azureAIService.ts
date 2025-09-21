@@ -1,35 +1,40 @@
-// Azure AI Foundry service to replace backend API calls
-import { AZURE_AI_CONFIG, AZURE_AI_AGENTS, getDefaultAgent, getAgentById, AzureAIAgent } from '../config/azureAI';
+// Azure AI Projects service to replace backend API calls
+// Based on Azure AI Foundry Projects API pattern
+import { AZURE_AI_CONFIG, AZURE_AI_AGENTS, getDefaultAgent, getAgentById, AzureAIAgent, AGENT_IDS } from '../config/azureAI';
 
-export interface AzureAIMessage {
-  role: 'system' | 'user' | 'assistant';
-  content: string;
-}
-
-export interface AzureAIRequest {
-  messages: AzureAIMessage[];
-  max_tokens?: number;
-  temperature?: number;
-  stream?: boolean;
-}
-
-export interface AzureAIResponse {
+// Azure AI Projects API interfaces
+export interface AzureAIProjectsThread {
   id: string;
   object: string;
-  created: number;
-  model: string;
-  choices: Array<{
-    index: number;
-    message: {
-      role: string;
-      content: string;
+  created_at: number;
+  metadata?: Record<string, any>;
+}
+
+export interface AzureAIProjectsMessage {
+  id: string;
+  object: string;
+  created_at: number;
+  thread_id: string;
+  role: 'user' | 'assistant';
+  content: Array<{
+    type: 'text';
+    text: {
+      value: string;
+      annotations?: any[];
     };
-    finish_reason: string;
   }>;
-  usage: {
-    prompt_tokens: number;
-    completion_tokens: number;
-    total_tokens: number;
+}
+
+export interface AzureAIProjectsRun {
+  id: string;
+  object: string;
+  created_at: number;
+  thread_id: string;
+  assistant_id: string;
+  status: 'queued' | 'in_progress' | 'completed' | 'failed' | 'cancelled';
+  last_error?: {
+    code: string;
+    message: string;
   };
 }
 
@@ -46,18 +51,15 @@ export interface ProjectQueryResponse {
   response: string;
   agentUsed: string;
   timestamp: string;
-  tokenUsage: {
-    promptTokens: number;
-    completionTokens: number;
-    totalTokens: number;
-  };
+  threadId: string;
+  runId: string;
   executionTime: number;
 }
 
 export interface ChatRequest {
   message: string;
   projectId: string;
-  conversationHistory?: AzureAIMessage[];
+  threadId?: string;
   agentId?: string;
 }
 
@@ -66,11 +68,8 @@ export interface ChatResponse {
   response: string;
   agentUsed: string;
   timestamp: string;
-  tokenUsage: {
-    promptTokens: number;
-    completionTokens: number;
-    totalTokens: number;
-  };
+  threadId: string;
+  runId: string;
 }
 
 class AzureAIService {
@@ -81,75 +80,178 @@ class AzureAIService {
     };
   }
 
-  private async makeRequest(agent: AzureAIAgent, request: AzureAIRequest): Promise<AzureAIResponse> {
-    const url = `${agent.endpoint}?api-version=${AZURE_AI_CONFIG.apiVersion}`;
-    
-    const requestBody = {
-      ...request,
-      max_tokens: request.max_tokens || AZURE_AI_CONFIG.maxTokens,
-      temperature: request.temperature || AZURE_AI_CONFIG.temperature,
-    };
+  // Create a new thread for conversation
+  private async createThread(): Promise<AzureAIProjectsThread> {
+    const url = `${AZURE_AI_CONFIG.projectEndpoint}/threads`;
 
     try {
       const response = await fetch(url, {
         method: 'POST',
         headers: this.getHeaders(),
-        body: JSON.stringify(requestBody),
+        body: JSON.stringify({}),
       });
 
       if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(`Azure AI API Error ${response.status}: ${errorText}`);
+        throw new Error(`Azure AI Projects API Error ${response.status}: ${errorText}`);
       }
 
       return await response.json();
     } catch (error) {
-      console.error('Error calling Azure AI:', error);
+      console.error('Error creating thread:', error);
       throw error;
     }
+  }
+
+  // Create a message in a thread
+  private async createMessage(threadId: string, content: string): Promise<AzureAIProjectsMessage> {
+    const url = `${AZURE_AI_CONFIG.projectEndpoint}/threads/${threadId}/messages`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: this.getHeaders(),
+        body: JSON.stringify({
+          role: 'user',
+          content: content,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Azure AI Projects API Error ${response.status}: ${errorText}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Error creating message:', error);
+      throw error;
+    }
+  }
+
+  // Create and run a conversation with an agent
+  private async createRun(threadId: string, agentId: string): Promise<AzureAIProjectsRun> {
+    const url = `${AZURE_AI_CONFIG.projectEndpoint}/threads/${threadId}/runs`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: this.getHeaders(),
+        body: JSON.stringify({
+          assistant_id: agentId,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Azure AI Projects API Error ${response.status}: ${errorText}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Error creating run:', error);
+      throw error;
+    }
+  }
+
+  // Get run status
+  private async getRun(threadId: string, runId: string): Promise<AzureAIProjectsRun> {
+    const url = `${AZURE_AI_CONFIG.projectEndpoint}/threads/${threadId}/runs/${runId}`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: this.getHeaders(),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Azure AI Projects API Error ${response.status}: ${errorText}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Error getting run:', error);
+      throw error;
+    }
+  }
+
+  // Get messages from a thread
+  private async getMessages(threadId: string): Promise<AzureAIProjectsMessage[]> {
+    const url = `${AZURE_AI_CONFIG.projectEndpoint}/threads/${threadId}/messages?order=asc`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: this.getHeaders(),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Azure AI Projects API Error ${response.status}: ${errorText}`);
+      }
+
+      const result = await response.json();
+      return result.data || [];
+    } catch (error) {
+      console.error('Error getting messages:', error);
+      throw error;
+    }
+  }
+
+  // Poll until run completes
+  private async waitForRunCompletion(threadId: string, runId: string): Promise<AzureAIProjectsRun> {
+    let run = await this.getRun(threadId, runId);
+
+    while (run.status === 'queued' || run.status === 'in_progress') {
+      // Wait for a second
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      run = await this.getRun(threadId, runId);
+    }
+
+    return run;
   }
 
   // Submit a project query to Azure AI agent
   async submitProjectQuery(request: ProjectQueryRequest): Promise<ProjectQueryResponse> {
     const startTime = Date.now();
     const agent = request.agentId ? getAgentById(request.agentId) : getDefaultAgent();
-    
+
     if (!agent) {
       throw new Error(`Agent not found: ${request.agentId}`);
     }
 
-    // Build system prompt based on agent capabilities
-    const systemPrompt = this.buildSystemPrompt(agent, request);
-    
-    const messages: AzureAIMessage[] = [
-      {
-        role: 'system',
-        content: systemPrompt,
-      },
-      {
-        role: 'user',
-        content: request.query,
-      },
-    ];
-
-    const aiRequest: AzureAIRequest = {
-      messages,
-    };
-
     try {
-      const response = await this.makeRequest(agent, aiRequest);
+      // Create a new thread
+      const thread = await this.createThread();
+
+      // Create a message with the query
+      await this.createMessage(thread.id, request.query);
+
+      // Create and run the conversation
+      const run = await this.createRun(thread.id, agent.id);
+
+      // Wait for completion
+      const completedRun = await this.waitForRunCompletion(thread.id, run.id);
+
+      if (completedRun.status === 'failed') {
+        throw new Error(`Run failed: ${completedRun.last_error?.message || 'Unknown error'}`);
+      }
+
+      // Get the response messages
+      const messages = await this.getMessages(thread.id);
+      const assistantMessage = messages.find(m => m.role === 'assistant');
+      const responseContent = assistantMessage?.content.find(c => c.type === 'text')?.text.value || 'No response generated';
+
       const executionTime = Date.now() - startTime;
 
       return {
-        queryId: `query_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-        response: response.choices[0]?.message?.content || 'No response generated',
+        queryId: `query_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`,
+        response: responseContent,
         agentUsed: agent.id,
         timestamp: new Date().toISOString(),
-        tokenUsage: {
-          promptTokens: response.usage?.prompt_tokens || 0,
-          completionTokens: response.usage?.completion_tokens || 0,
-          totalTokens: response.usage?.total_tokens || 0,
-        },
+        threadId: thread.id,
+        runId: run.id,
         executionTime,
       };
     } catch (error) {
@@ -161,41 +263,45 @@ class AzureAIService {
   // Handle chat messages
   async sendChatMessage(request: ChatRequest): Promise<ChatResponse> {
     const agent = request.agentId ? getAgentById(request.agentId) : getDefaultAgent();
-    
+
     if (!agent) {
       throw new Error(`Agent not found: ${request.agentId}`);
     }
 
-    // Build conversation with history
-    const messages: AzureAIMessage[] = [
-      {
-        role: 'system',
-        content: this.buildChatSystemPrompt(agent),
-      },
-      ...(request.conversationHistory || []),
-      {
-        role: 'user',
-        content: request.message,
-      },
-    ];
-
-    const aiRequest: AzureAIRequest = {
-      messages,
-    };
-
     try {
-      const response = await this.makeRequest(agent, aiRequest);
+      let threadId = request.threadId;
+
+      // Create a new thread if none provided
+      if (!threadId) {
+        const thread = await this.createThread();
+        threadId = thread.id;
+      }
+
+      // Create a message with the chat content
+      await this.createMessage(threadId, request.message);
+
+      // Create and run the conversation
+      const run = await this.createRun(threadId, agent.id);
+
+      // Wait for completion
+      const completedRun = await this.waitForRunCompletion(threadId, run.id);
+
+      if (completedRun.status === 'failed') {
+        throw new Error(`Run failed: ${completedRun.last_error?.message || 'Unknown error'}`);
+      }
+
+      // Get the response messages
+      const messages = await this.getMessages(threadId);
+      const assistantMessage = messages.find(m => m.role === 'assistant' && m.created_at > completedRun.created_at);
+      const responseContent = assistantMessage?.content.find(c => c.type === 'text')?.text.value || 'No response generated';
 
       return {
-        messageId: `msg_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-        response: response.choices[0]?.message?.content || 'No response generated',
+        messageId: `msg_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`,
+        response: responseContent,
         agentUsed: agent.id,
         timestamp: new Date().toISOString(),
-        tokenUsage: {
-          promptTokens: response.usage?.prompt_tokens || 0,
-          completionTokens: response.usage?.completion_tokens || 0,
-          totalTokens: response.usage?.total_tokens || 0,
-        },
+        threadId: threadId,
+        runId: run.id,
       };
     } catch (error) {
       console.error('Error sending chat message:', error);
@@ -208,41 +314,7 @@ class AzureAIService {
     return AZURE_AI_AGENTS;
   }
 
-  // Build system prompt for project queries
-  private buildSystemPrompt(agent: AzureAIAgent, request: ProjectQueryRequest): string {
-    let prompt = `You are ${agent.name}, ${agent.description}.\n\n`;
-    
-    prompt += `Your capabilities include: ${agent.capabilities.join(', ')}.\n\n`;
-    
-    prompt += `You are analyzing a query for Project ID: ${request.projectId}.\n\n`;
-    
-    if (request.includeProjectFiles) {
-      prompt += `Consider any relevant project files and documents in your analysis.\n\n`;
-    }
-    
-    if (request.additionalContext && Object.keys(request.additionalContext).length > 0) {
-      prompt += `Additional context:\n${JSON.stringify(request.additionalContext, null, 2)}\n\n`;
-    }
-    
-    prompt += `Provide a comprehensive analysis based on your expertise. Structure your response with:
-1. Executive Summary
-2. Key Insights
-3. Recommendations
-4. Next Steps
 
-Be specific, actionable, and professional in your response.`;
-    
-    return prompt;
-  }
-
-  // Build system prompt for chat
-  private buildChatSystemPrompt(agent: AzureAIAgent): string {
-    return `You are ${agent.name}, ${agent.description}.
-
-Your capabilities include: ${agent.capabilities.join(', ')}.
-
-You are having a conversation with a user about their project. Be helpful, professional, and provide insights based on your expertise. Keep responses concise but informative.`;
-  }
 }
 
 export const azureAIService = new AzureAIService();
