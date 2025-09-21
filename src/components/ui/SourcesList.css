@@ -1,0 +1,169 @@
+.sources-list {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sources-list-label {
+  color: var(--Light-Foreground-Tertiary, var(--Foreground-Tertiary, #687381));
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.33px;
+}
+
+.sources-list-images {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  position: relative;
+}
+
+.source-link {
+  display: inline-flex;
+  text-decoration: none;
+}
+
+.source-list-image {
+  object-fit: contain;
+  border-radius: 4px;
+  padding: 2px;
+}
+
+.source-list-image-clickable {
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.source-list-image-clickable:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+.source-list-image-small {
+  width: 20px;
+  height: 20px;
+}
+
+.source-list-image-medium {
+  width: 24px;
+  height: 24px;
+}
+
+.sources-more-indicator {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sources-more-indicator:hover {
+  opacity: 0.8;
+}
+
+.sources-more-count {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--Light-Foreground-Secondary, var(--Foreground-Secondary, #45484F));
+  line-height: 1;
+}
+
+.sources-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: 0;
+  z-index: 1000;
+  animation: tooltipFadeIn 0.2s ease;
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sources-tooltip-content {
+  background: white;
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  max-width: 280px;
+}
+
+.sources-tooltip-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--Light-Foreground-Primary, var(--Foreground-Primary, #222325));
+  margin-bottom: 8px;
+}
+
+.sources-tooltip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(28px, 1fr));
+  gap: 6px;
+}
+
+.source-tooltip-link {
+  display: inline-flex;
+  text-decoration: none;
+}
+
+.source-tooltip-image {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  border-radius: 4px;
+  padding: 3px;
+  transition: transform 0.2s ease;
+}
+
+.source-tooltip-image-clickable {
+  cursor: pointer;
+}
+
+.source-tooltip-image-clickable:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+.source-tooltip-image:hover {
+  transform: scale(1.1);
+}
+
+/* Tooltip arrow */
+.sources-tooltip-content::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 8px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid white;
+}
+
+.sources-tooltip-content::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 7px;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid var(--color-border, #e5e7eb);
+}

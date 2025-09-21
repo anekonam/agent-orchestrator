@@ -1,0 +1,401 @@
+/* CSS Variables */
+:root {
+  --black-black: #000000; 
+  --black-black-alpha12: #0000001f; 
+  --black-black-alpha16: #00000029; 
+  --black-black-alpha24: #0000003d; 
+  --black-black-alpha40: #00000066; 
+  --black-black-alpha56: #0000008f; 
+  --black-black-alpha72: #000000b8; 
+  --black-black-alpha8: #00000014; 
+  --black-black-alpha88: #000000e0; 
+  --black-transparent-black: #00000000; 
+
+  --blue-10: #cfe0fd; 
+  --blue-100: #7eacff; 
+  --blue-200: #40a9fa; 
+  --blue-300: #0090ff; 
+  --blue-400: #267ad9; 
+  --blue-5: #e7ebff; 
+  --blue-50: #a9c9ff; 
+  --blue-500: #0c4dbc; 
+  --blue-600: #003da6; 
+  --blue-700: #002b74; 
+  --blue-800: #001e53; 
+  --blue-900: #00102b; 
+
+  --gray-200: #cccccc; 
+  --gray-300: #b2b2b2; 
+  --gray-400: #939393; 
+  --gray-500: #828282; 
+  --gray-600: #656565; 
+  --gray-700: #555555; 
+  --gray-800: #333333; 
+  --gray-900: #222222; 
+  --gray-960: #0a0a0a; 
+
+  --green-10: #e7f9f9; 
+  --green-100: #b6eded; 
+  --green-200: #9de7e8; 
+  --green-300: #85e2e2; 
+  --green-400: #6ddcdc; 
+  --green-50: #d9f3f3; 
+  --green-500: #54d6d6; 
+  --green-600: #3cd0d0; 
+  --green-700: #27a2a2; 
+  --green-750: #008585; 
+  --green-800: #1a6c6c; 
+  --green-900: #0d3636; 
+
+  --orange-10: #fdf0ea; 
+  --orange-100: #f9d2bf; 
+  --orange-200: #f8c3aa; 
+  --orange-300: #f6b595; 
+  --orange-400: #f4a67f; 
+  --orange-50: #ffebd4; 
+  --orange-500: #f2976a; 
+  --orange-600: #f08855; 
+  --orange-700: #e05714; 
+  --orange-750: #c03f00; 
+  --orange-800: #953a0d; 
+  --orange-900: #4b1d07; 
+
+  --purple-10: #e7e4f4; 
+  --purple-100: #b7afdf; 
+  --purple-200: #9f94d5; 
+  --purple-300: #8879ca; 
+  --purple-400: #705fc0; 
+  --purple-50: #cfcaea; 
+  --purple-500: #5947b3; 
+  --purple-600: #4c3c98; 
+  --purple-700: #392d72; 
+  --purple-800: #261e4c; 
+  --purple-900: #130f26; 
+
+  --red-10: #ffeaeb; 
+  --red-100: #f6b2b7; 
+  --red-200: #f399a0; 
+  --red-300: #f17f88; 
+  --red-400: #ee6570; 
+  --red-50: #f9cccf; 
+  --red-500: #eb4c58; 
+  --red-600: #e83240; 
+  --red-650: #d31220; 
+  --red-700: #be1522; 
+  --red-800: #7f0e17; 
+  --red-900: #3f070b; 
+
+  --steel-gray-10: #f1f3f6; 
+  --steel-gray-100: #b2b8c1; 
+  --steel-gray-120: #9fa7b2; 
+  --steel-gray-140: #878f9e; 
+  --steel-gray-20: #e9ecf5; 
+  --steel-gray-200: #808899; 
+  --steel-gray-300: #687381; 
+  --steel-gray-40: #e5e7ea; 
+  --steel-gray-60: #d5d8db; 
+  --steel-gray-700: #45484f; 
+  --steel-gray-80: #c5cad1; 
+  --steel-gray-800: #222325; 
+
+  --white-transparent-white: #ffffff00; 
+  --white-white: #ffffff; 
+  --white-white-alpha16: #ffffff29; 
+  --white-white-alpha24: #ffffff3d; 
+  --white-white-alpha4: #ffffff0a; 
+  --white-white-alpha40: #ffffff66; 
+  --white-white-alpha64: #ffffffa3; 
+  --white-white-alpha72: #ffffffb8; 
+  --white-white-alpha88: #ffffffe0; 
+
+  /* Commonly Used Colors - extracted from repeated values */
+  --color-button-secondary-alpha: rgba(59, 130, 246, 0.1);
+
+  /* Primary Brand Colors */
+  --color-primary-blue: var(--blue-600);
+  --color-primary-blue-light: var(--gradient-gradient-blue-color-1);
+  --color-primary-blue-gradient: linear-gradient(290deg, var(--blue-600) 21.88%, var(--gradient-gradient-blue-color-1) 100%);
+  --color-accent-blue: #0090FF;
+  --color-accent-blue-light: #00a8ff;
+  --color-accent-teal: #008585;
+  
+  /* Background Colors */
+  --color-background: var(--white-white);
+  --color-background-page: var(--steel-gray-10);
+  --color-background-secondary: #f9fafb;
+  --color-background-tertiary: #f8f9fa;
+  --color-background-highlighted: rgba(213, 216, 219, 0.40);
+  --color-background-placeholder: var(--steel-gray-60);
+  --color-card-background: var(--white-white);
+  
+  /* Text Colors */
+  --color-text-primary: var(--steel-gray-800);
+  --color-text-secondary: var(--steel-gray-700);
+  --color-text-tertiary: var(--steel-gray-300);
+  --color-text-quaternary: var(--steel-gray-140);
+  --color-text-muted: #9ca3af;
+  --color-text-placeholder: var(--steel-gray-140);
+  --color-text-disabled: #6b7280;
+  
+  /* Border Colors */
+  --color-border: #e5e7eb;
+  --color-border-light: #eee;
+  --color-border-medium: #d1d5db;
+  --color-border-strong: var(--steel-gray-60);
+  
+  /* Button Colors */
+  --color-button-primary-bg: linear-gradient(290deg, var(--blue-600) 21.88%, var(--gradient-gradient-blue-color-1) 100%);
+  --color-button-primary-fg: var(--white-white);
+  --color-button-secondary-bg: var(--color-button-secondary-alpha);
+  --color-button-secondary-fg: var(--blue-600);
+  --color-button-tertiary-fg: var(--blue-600);
+  
+  /* Status Colors */
+  --color-success: var(--green-750);
+  --color-success-bg: var(--green-50);
+  --color-success-light: var(--green-10);
+  --color-success-text: var(--green-800);
+  
+  --color-warning: var(--orange-600);
+  --color-warning-bg: var(--orange-50);
+  --color-warning-light: var(--orange-10);
+  --color-warning-text: var(--orange-750);
+  
+  --color-danger: var(--red-600);
+  --color-danger-hover: var(--red-700);
+  --color-danger-bg: var(--red-50);
+  --color-danger-light: var(--red-10);
+  --color-danger-text: var(--red-650);
+  
+  --color-info: #3b82f6;
+  --color-info-bg: #cfe2ff;
+  
+  /* Interactive States */
+  --color-hover-bg: #f3f4f6;
+  --color-hover-bg-light: rgba(255, 255, 255, 0.5);
+  --color-focus-ring: var(--color-button-secondary-alpha);
+  
+  /* Shadow Colors */
+  --color-shadow-light: rgba(0, 0, 0, 0.05);
+  --color-shadow-medium: rgba(0, 0, 0, 0.1);
+  --color-shadow-strong: rgba(0, 0, 0, 0.15);
+  
+  /* Toast/Modal Colors */
+  --color-overlay: rgba(0, 0, 0, 0.5);
+  --color-toast-border: #D5D8DB;
+  
+  /* Chart/Data Colors */
+  --color-chart-primary: #2F80ED;
+  --color-chart-secondary: #003DA6;
+  
+  /* Legacy/Compatibility Colors - gradually replace these */
+  --color-primary: #3b82f6;
+  --color-primary-hover: #2563eb;
+  --color-accent: #10b981;
+  
+  /* Spacing */
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+  --spacing-8: 32px;
+  --spacing-10: 40px;
+  --spacing-12: 48px;
+  --spacing-16: 64px;
+  
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --radius-xxl: 12px;
+  
+  /* Typography */
+  --font-sans: 'Circular Std', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 32px;
+  
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --accent-accent: var(--blue-600); 
+  --accent-attention: var(--orange-750); 
+  --accent-destructive: var(--red-650); 
+  --accent-link: var(--blue-300); 
+  --accent-valid: var(--green-750); 
+
+  --background-accent: var(--blue-600); 
+  --background-content: var(--white-white); 
+  --background-highlighted: #d5d8db66; 
+  --background-login-overlay: #0c4dbc80; 
+  --background-modal: var(--steel-gray-10); 
+  --background-modal-overlay: var(--black-black-alpha40); 
+  --background-modal-overlay-dark: var(--black-black-alpha72); 
+  --background-page: var(--steel-gray-10); 
+  --background-page-blur: #f1f3f699; 
+  --background-placeholder: var(--steel-gray-60); 
+  --background-selection: var(--blue-5); 
+
+  --category-bills: #004f7a; 
+  --category-card-payments: #0198ed; 
+  --category-cash: #2767ec; 
+  --category-dining: #00b2cc; 
+  --category-donation-and-gifts: #a78bfa; 
+  --category-education: #4e3089; 
+  --category-entertainment: #e14f6a; 
+  --category-fees-and-charges: #01c6ef; 
+  --category-groceries: #008c8c; 
+  --category-grouped: #bdc4d1; 
+  --category-health: #a8e06c; 
+  --category-income: #4caf50; 
+  --category-incoming: #00ccb1; 
+  --category-insurance: #ffd700; 
+  --category-internal-transfers: #3e94ca; 
+  --category-investments: #2e7d32; 
+  --category-loans: #6a5acd; 
+  --category-others: #aaaaaa; 
+  --category-outgoing: #0c80cd; 
+  --category-rewards: #190470; 
+  --category-services: #009e60; 
+  --category-shopping: #a73ab0; 
+  --category-transfers: #295eb9; 
+  --category-transport: #ffb000; 
+  --category-travel: #fb7427; 
+  --category-wellness: #50c878; 
+
+  --foreground-on-overlay-primary: var(--white-white); 
+  --foreground-on-overlay-secondary: var(--white-white-alpha88); 
+  --foreground-placeholder: var(--steel-gray-140); 
+  --foreground-primary: var(--steel-gray-800); 
+  --foreground-secondary: var(--steel-gray-700); 
+  --foreground-tertiary: var(--steel-gray-300); 
+
+  --gradient-gradient-black-color-1: #00000000; 
+  --gradient-gradient-black-color-2: #000000cc; 
+  --gradient-gradient-blue-color-1: #2f80ed; 
+  --gradient-gradient-blue-color-2: var(--blue-600); 
+  --gradient-gradient-blue-temp-color-1: #013287; 
+  --gradient-gradient-blue-temp-color-2: #0c4dbc; 
+  --gradient-gradient-green-color-1: var(--green-600); 
+  --gradient-gradient-green-color-2: #1855a5; 
+  --gradient-gradient-primary-color-1: #749cff; 
+  --gradient-gradient-primary-color-2: #0776b1; 
+  --gradient-gradient-primary-color-3: #38087a; 
+  --gradient-gradient-primary-color-4: var(--accent-accent); 
+  --gradient-gradient-primary-color-5: #0090ff; 
+  --gradient-gradient-primary-color-6: #0776b100; 
+  --gradient-gradient-primary-color-7: #38087a00; 
+  --gradient-gradient-primary-color-8: var(--tint-accent); 
+  --gradient-product-account-color-1: #2f80ed; 
+  --gradient-product-account-color-2: var(--blue-600); 
+  --gradient-product-credit-card-color-1: #936be8; 
+  --gradient-product-credit-card-color-2: var(--blue-600); 
+  --gradient-product-deposit-color-1: #db4444; 
+  --gradient-product-deposit-color-2: #1252bf; 
+  --gradient-product-insurance-color-1: #94df19; 
+  --gradient-product-insurance-color-2: #008ac6; 
+  --gradient-product-loan-color-1: var(--red-600); 
+  --gradient-product-loan-color-2: #3b3fd8; 
+  --gradient-product-mutual-color-1: #e7912d; 
+  --gradient-product-mutual-color-2: #787079; 
+  --gradient-product-mutual-color-3: #1252bf; 
+  --gradient-product-prepaid-card-color-1: #4c3c98; 
+  --gradient-product-prepaid-card-color-2: var(--blue-600); 
+  --gradient-product-rewards-color-1: var(--green-600); 
+  --gradient-product-rewards-color-2: #2788b7; 
+  --gradient-product-rewards-color-3: #1855a5; 
+
+  --separator-common: var(--steel-gray-60); 
+
+  --tint-accent: var(--blue-10); 
+  --tint-attention: var(--orange-50); 
+  --tint-destructive: var(--red-10); 
+  --tint-valid: var(--green-50); 
+  
+}
+
+/* Global Styles and Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Circular Std';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-background-page);
+}
+
+#root {
+  height: 100%;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Remove default button styles */
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: inherit;
+}
+
+/* Remove default link styles */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Remove default list styles */
+ul, ol {
+  list-style: none;
+}
+
+/* Remove default input styles */
+input, textarea, select {
+  outline: none;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-text-muted);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-disabled);
+}
+
+/* Firefox scrollbar styling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-text-muted) transparent;
+}

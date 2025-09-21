@@ -1,0 +1,4878 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "FAB MCP Server",
+        "description": "Central communication hub for FAB multi-agent system",
+        "version": "0.1.0"
+    },
+    "paths": {
+        "/api/v1/health": {
+            "get": {
+                "tags": [
+                    "health"
+                ],
+                "summary": "Health Check",
+                "description": "Health check endpoint.",
+                "operationId": "health_check_api_v1_health_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HealthResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ready": {
+            "get": {
+                "tags": [
+                    "health"
+                ],
+                "summary": "Readiness Check",
+                "description": "Readiness check endpoint.",
+                "operationId": "readiness_check_api_v1_ready_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "title": "Response Readiness Check Api V1 Ready Get"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/login": {
+            "post": {
+                "tags": [
+                    "authentication",
+                    "authentication"
+                ],
+                "summary": "Login",
+                "description": "Login with username and password.\n\nReturns access and refresh tokens.",
+                "operationId": "login_api_v1_auth_login_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/token": {
+            "post": {
+                "tags": [
+                    "authentication",
+                    "authentication"
+                ],
+                "summary": "Login For Token",
+                "description": "OAuth2 compatible token endpoint.\n\nFor use with FastAPI's OAuth2 integration.",
+                "operationId": "login_for_token_api_v1_auth_token_post",
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_login_for_token_api_v1_auth_token_post"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TokenResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/refresh": {
+            "post": {
+                "tags": [
+                    "authentication",
+                    "authentication"
+                ],
+                "summary": "Refresh Token",
+                "description": "Refresh access token using refresh token.",
+                "operationId": "refresh_token_api_v1_auth_refresh_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RefreshRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TokenResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/logout": {
+            "post": {
+                "tags": [
+                    "authentication",
+                    "authentication"
+                ],
+                "summary": "Logout",
+                "description": "Logout and revoke token.",
+                "operationId": "logout_api_v1_auth_logout_post",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/auth/me": {
+            "get": {
+                "tags": [
+                    "authentication",
+                    "authentication"
+                ],
+                "summary": "Get Current User",
+                "description": "Get current user information.",
+                "operationId": "get_current_user_api_v1_auth_me_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserInfo"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/auth/api-keys": {
+            "post": {
+                "tags": [
+                    "authentication",
+                    "authentication"
+                ],
+                "summary": "Create Api Key",
+                "description": "Create a new API key.\n\nRequires admin role.",
+                "operationId": "create_api_key_api_v1_auth_api_keys_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/APIKeyRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/APIKeyResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/auth/verify": {
+            "get": {
+                "tags": [
+                    "authentication",
+                    "authentication"
+                ],
+                "summary": "Verify Token",
+                "description": "Verify current token is valid.",
+                "operationId": "verify_token_api_v1_auth_verify_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/auth/verify-api-key": {
+            "get": {
+                "tags": [
+                    "authentication",
+                    "authentication"
+                ],
+                "summary": "Verify Api Key",
+                "description": "Verify API key is valid.",
+                "operationId": "verify_api_key_api_v1_auth_verify_api_key_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "APIKeyHeader": []
+                    },
+                    {
+                        "APIKeyQuery": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/auth/roles": {
+            "get": {
+                "tags": [
+                    "authentication",
+                    "authentication"
+                ],
+                "summary": "List Roles",
+                "description": "List available roles.",
+                "operationId": "list_roles_api_v1_auth_roles_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/agents/health": {
+            "get": {
+                "tags": [
+                    "agent-health",
+                    "agent-health"
+                ],
+                "summary": "Get System Health",
+                "description": "Get health status of all agents.",
+                "operationId": "get_system_health_api_v1_agents_health_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/agents/health/{agent_id}": {
+            "get": {
+                "tags": [
+                    "agent-health",
+                    "agent-health"
+                ],
+                "summary": "Get Agent Health",
+                "description": "Get health status of a specific agent.",
+                "operationId": "get_agent_health_api_v1_agents_health__agent_id__get",
+                "parameters": [
+                    {
+                        "name": "agent_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Agent Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/agents/metrics": {
+            "get": {
+                "tags": [
+                    "agent-health",
+                    "agent-health"
+                ],
+                "summary": "Get System Metrics",
+                "description": "Get system-wide metrics.",
+                "operationId": "get_system_metrics_api_v1_agents_metrics_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/agents/metrics/tokens": {
+            "get": {
+                "tags": [
+                    "agent-health",
+                    "agent-health"
+                ],
+                "summary": "Get Token Usage",
+                "description": "Get token usage over time.",
+                "operationId": "get_token_usage_api_v1_agents_metrics_tokens_get",
+                "parameters": [
+                    {
+                        "name": "period",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^(hour|day|week|month)$",
+                            "default": "day",
+                            "title": "Period"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/agents/metrics/{agent_id}": {
+            "get": {
+                "tags": [
+                    "agent-health",
+                    "agent-health"
+                ],
+                "summary": "Get Agent Metrics",
+                "description": "Get metrics for a specific agent.",
+                "operationId": "get_agent_metrics_api_v1_agents_metrics__agent_id__get",
+                "parameters": [
+                    {
+                        "name": "agent_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Agent Id"
+                        }
+                    },
+                    {
+                        "name": "period",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "day",
+                            "title": "Period"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/agents/register": {
+            "post": {
+                "tags": [
+                    "agents"
+                ],
+                "summary": "Register Agent",
+                "description": "Register a new agent.",
+                "operationId": "register_agent_api_v1_agents_register_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AgentRegistration"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AgentInfo"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/agents": {
+            "get": {
+                "tags": [
+                    "agents"
+                ],
+                "summary": "List Agents",
+                "description": "List all registered agents.",
+                "operationId": "list_agents_api_v1_agents_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/AgentInfo"
+                                    },
+                                    "type": "array",
+                                    "title": "Response List Agents Api V1 Agents Get"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/agents/{agent_id}": {
+            "get": {
+                "tags": [
+                    "agents"
+                ],
+                "summary": "Get Agent",
+                "description": "Get agent details.",
+                "operationId": "get_agent_api_v1_agents__agent_id__get",
+                "parameters": [
+                    {
+                        "name": "agent_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "title": "Agent Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AgentInfo"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "agents"
+                ],
+                "summary": "Unregister Agent",
+                "description": "Unregister an agent.",
+                "operationId": "unregister_agent_api_v1_agents__agent_id__delete",
+                "parameters": [
+                    {
+                        "name": "agent_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "title": "Agent Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/agents/heartbeat": {
+            "post": {
+                "tags": [
+                    "agents"
+                ],
+                "summary": "Agent Heartbeat",
+                "description": "Process agent heartbeat.",
+                "operationId": "agent_heartbeat_api_v1_agents_heartbeat_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Message"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "title": "Response Agent Heartbeat Api V1 Agents Heartbeat Post"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/messages": {
+            "post": {
+                "tags": [
+                    "messages"
+                ],
+                "summary": "Send Message",
+                "description": "Send a message to an agent.",
+                "operationId": "send_message_api_v1_messages_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Message"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "title": "Response Send Message Api V1 Messages Post"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/messages/{agent_id}": {
+            "get": {
+                "tags": [
+                    "messages"
+                ],
+                "summary": "Get Messages",
+                "description": "Get pending messages for an agent.",
+                "operationId": "get_messages_api_v1_messages__agent_id__get",
+                "parameters": [
+                    {
+                        "name": "agent_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "title": "Agent Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "title": "Response Get Messages Api V1 Messages  Agent Id  Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/communications/recent": {
+            "get": {
+                "tags": [
+                    "messages"
+                ],
+                "summary": "Get Recent Communications",
+                "description": "Get recent agent communications (public endpoint for development).",
+                "operationId": "get_recent_communications_api_v1_communications_recent_get",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "maximum": 1000,
+                            "default": 100,
+                            "title": "Limit"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/queries/": {
+            "post": {
+                "tags": [
+                    "queries",
+                    "queries"
+                ],
+                "summary": "Submit Query",
+                "description": "Submit a query for processing.",
+                "operationId": "submit_query_api_v1_queries__post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/QueryRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/queries/active": {
+            "get": {
+                "tags": [
+                    "queries",
+                    "queries"
+                ],
+                "summary": "Get Active Queries",
+                "description": "Get all active queries.",
+                "operationId": "get_active_queries_api_v1_queries_active_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/queries/history": {
+            "get": {
+                "tags": [
+                    "queries",
+                    "queries"
+                ],
+                "summary": "Get Query History",
+                "description": "Get query history.",
+                "operationId": "get_query_history_api_v1_queries_history_get",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "maximum": 500,
+                            "default": 50,
+                            "title": "Limit"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/queries/{query_id}": {
+            "get": {
+                "tags": [
+                    "queries",
+                    "queries"
+                ],
+                "summary": "Get Query Status",
+                "description": "Get detailed status of a query.",
+                "operationId": "get_query_status_api_v1_queries__query_id__get",
+                "parameters": [
+                    {
+                        "name": "query_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Query Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/queries/{query_id}/stream": {
+            "get": {
+                "tags": [
+                    "queries",
+                    "queries"
+                ],
+                "summary": "Stream Query Status",
+                "description": "Stream real-time updates for a query using Server-Sent Events.",
+                "operationId": "stream_query_status_api_v1_queries__query_id__stream_get",
+                "parameters": [
+                    {
+                        "name": "query_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Query Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/queries/{query_id}/communications": {
+            "get": {
+                "tags": [
+                    "queries",
+                    "queries"
+                ],
+                "summary": "Get Query Communications",
+                "description": "Get all communications for a specific query.",
+                "operationId": "get_query_communications_api_v1_queries__query_id__communications_get",
+                "parameters": [
+                    {
+                        "name": "query_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Query Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/queries/{query_id}/tasks": {
+            "get": {
+                "tags": [
+                    "queries",
+                    "queries"
+                ],
+                "summary": "Get Task Distribution",
+                "description": "Get task distribution for a query.",
+                "operationId": "get_task_distribution_api_v1_queries__query_id__tasks_get",
+                "parameters": [
+                    {
+                        "name": "query_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Query Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/projects/": {
+            "post": {
+                "tags": [
+                    "projects",
+                    "projects"
+                ],
+                "summary": "Create Project",
+                "description": "Create a new project",
+                "operationId": "create_project_api_v1_projects__post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProjectCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Project"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "projects",
+                    "projects"
+                ],
+                "summary": "List Projects",
+                "description": "List all projects",
+                "operationId": "list_projects_api_v1_projects__get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/ProjectStatus"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Status"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "maximum": 1000,
+                            "minimum": 1,
+                            "default": 100,
+                            "title": "Limit"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "default": 0,
+                            "title": "Offset"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Project"
+                                    },
+                                    "title": "Response List Projects Api V1 Projects  Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/projects/{project_id}": {
+            "get": {
+                "tags": [
+                    "projects",
+                    "projects"
+                ],
+                "summary": "Get Project",
+                "description": "Get a specific project by ID",
+                "operationId": "get_project_api_v1_projects__project_id__get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "title": "Project Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Project"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "projects",
+                    "projects"
+                ],
+                "summary": "Update Project",
+                "description": "Update a project",
+                "operationId": "update_project_api_v1_projects__project_id__put",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "title": "Project Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProjectUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Project"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "projects",
+                    "projects"
+                ],
+                "summary": "Delete Project",
+                "description": "Delete a project (soft delete by default)",
+                "operationId": "delete_project_api_v1_projects__project_id__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "title": "Project Id"
+                        }
+                    },
+                    {
+                        "name": "hard_delete",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "Hard Delete"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "title": "Response Delete Project Api V1 Projects  Project Id  Delete"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/projects/{project_id}/query": {
+            "post": {
+                "tags": [
+                    "projects",
+                    "projects"
+                ],
+                "summary": "Execute Project Query",
+                "description": "Execute a query within a project context",
+                "operationId": "execute_project_query_api_v1_projects__project_id__query_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "title": "Project Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProjectQueryRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/projects/{project_id}/refresh": {
+            "post": {
+                "tags": [
+                    "projects",
+                    "projects"
+                ],
+                "summary": "Refresh Project",
+                "description": "Refresh all queries in a project",
+                "operationId": "refresh_project_api_v1_projects__project_id__refresh_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "title": "Project Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProjectRefreshRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/projects/{project_id}/history": {
+            "get": {
+                "tags": [
+                    "projects",
+                    "projects"
+                ],
+                "summary": "Get Project History",
+                "description": "Get conversation history for a project",
+                "operationId": "get_project_history_api_v1_projects__project_id__history_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "title": "Project Id"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "maximum": 1000,
+                            "minimum": 1,
+                            "default": 100,
+                            "title": "Limit"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "default": 0,
+                            "title": "Offset"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ConversationEntry"
+                                    },
+                                    "title": "Response Get Project History Api V1 Projects  Project Id  History Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/files/upload": {
+            "post": {
+                "tags": [
+                    "files",
+                    "files"
+                ],
+                "summary": "Upload File",
+                "description": "Upload a file to the system",
+                "operationId": "upload_file_api_v1_files_upload_post",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_upload_file_api_v1_files_upload_post"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FileMetadata"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/files/": {
+            "get": {
+                "tags": [
+                    "files",
+                    "files"
+                ],
+                "summary": "List Files",
+                "description": "List files based on filters",
+                "operationId": "list_files_api_v1_files__get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "scope",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/FileScope"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Scope"
+                        }
+                    },
+                    {
+                        "name": "project_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Project Id"
+                        }
+                    },
+                    {
+                        "name": "category",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/FileCategory"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Category"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/FileStatus"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Status"
+                        }
+                    },
+                    {
+                        "name": "tags",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Tags"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "maximum": 1000,
+                            "minimum": 1,
+                            "default": 100,
+                            "title": "Limit"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "default": 0,
+                            "title": "Offset"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/FileMetadata"
+                                    },
+                                    "title": "Response List Files Api V1 Files  Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/files/stats": {
+            "get": {
+                "tags": [
+                    "files",
+                    "files"
+                ],
+                "summary": "Get File Stats",
+                "description": "Get statistics about files in the system",
+                "operationId": "get_file_stats_api_v1_files_stats_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GlobalFileStats"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/files/{file_id}": {
+            "get": {
+                "tags": [
+                    "files",
+                    "files"
+                ],
+                "summary": "Get File Metadata",
+                "description": "Get metadata for a specific file",
+                "operationId": "get_file_metadata_api_v1_files__file_id__get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "file_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "title": "File Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FileMetadata"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "files",
+                    "files"
+                ],
+                "summary": "Delete File",
+                "description": "Delete a file",
+                "operationId": "delete_file_api_v1_files__file_id__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "file_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "title": "File Id"
+                        }
+                    },
+                    {
+                        "name": "hard_delete",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "Hard Delete"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "title": "Response Delete File Api V1 Files  File Id  Delete"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/files/{file_id}/download": {
+            "get": {
+                "tags": [
+                    "files",
+                    "files"
+                ],
+                "summary": "Download File",
+                "description": "Download a file",
+                "operationId": "download_file_api_v1_files__file_id__download_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "file_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "title": "File Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/files/{file_id}/process": {
+            "post": {
+                "tags": [
+                    "files",
+                    "files"
+                ],
+                "summary": "Process File",
+                "description": "Process a file for RAG indexing",
+                "operationId": "process_file_api_v1_files__file_id__process_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "file_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "title": "File Id"
+                        }
+                    },
+                    {
+                        "name": "force_reprocess",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "Force Reprocess"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FileProcessingResult"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/files/project/{project_id}/upload": {
+            "post": {
+                "tags": [
+                    "files",
+                    "files"
+                ],
+                "summary": "Upload Project File",
+                "description": "Upload a file to a specific project",
+                "operationId": "upload_project_file_api_v1_files_project__project_id__upload_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "title": "Project Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_upload_project_file_api_v1_files_project__project_id__upload_post"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FileMetadata"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/files/project/{project_id}": {
+            "get": {
+                "tags": [
+                    "files",
+                    "files"
+                ],
+                "summary": "List Project Files",
+                "description": "List all files for a specific project",
+                "operationId": "list_project_files_api_v1_files_project__project_id__get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "title": "Project Id"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/FileStatus"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Status"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "maximum": 1000,
+                            "minimum": 1,
+                            "default": 100,
+                            "title": "Limit"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "default": 0,
+                            "title": "Offset"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/FileMetadata"
+                                    },
+                                    "title": "Response List Project Files Api V1 Files Project  Project Id  Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/metrics": {
+            "get": {
+                "tags": [
+                    "metrics",
+                    "metrics"
+                ],
+                "summary": "Get System Metrics",
+                "description": "Get overall system metrics.",
+                "operationId": "get_system_metrics_api_v1_metrics_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/metrics/token-usage": {
+            "get": {
+                "tags": [
+                    "metrics",
+                    "metrics"
+                ],
+                "summary": "Get Token Usage",
+                "description": "Get token usage metrics.",
+                "operationId": "get_token_usage_api_v1_metrics_token_usage_get",
+                "parameters": [
+                    {
+                        "name": "period",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Time period: hour, day, week",
+                            "default": "hour",
+                            "title": "Period"
+                        },
+                        "description": "Time period: hour, day, week"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/metrics/agents/{agent_id}": {
+            "get": {
+                "tags": [
+                    "metrics",
+                    "metrics"
+                ],
+                "summary": "Get Agent Metrics",
+                "description": "Get metrics for a specific agent.",
+                "operationId": "get_agent_metrics_api_v1_metrics_agents__agent_id__get",
+                "parameters": [
+                    {
+                        "name": "agent_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Agent Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/documents/upload": {
+            "post": {
+                "tags": [
+                    "documents",
+                    "documents"
+                ],
+                "summary": "Upload Document",
+                "description": "Upload and process a document.\n\nArgs:\n    file: The uploaded file\n    document_type: Optional document type hint\n    agent_id: Optional agent ID to associate document with\n    task_id: Optional task ID to associate document with\n\nReturns:\n    Processed document information",
+                "operationId": "upload_document_api_v1_documents_upload_post",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_upload_document_api_v1_documents_upload_post"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/documents/process/{file_id}": {
+            "post": {
+                "tags": [
+                    "documents",
+                    "documents"
+                ],
+                "summary": "Process Existing Document",
+                "description": "Process an already uploaded document.\n\nArgs:\n    file_id: The file ID from upload\n    document_type: Optional document type hint\n\nReturns:\n    Processing results",
+                "operationId": "process_existing_document_api_v1_documents_process__file_id__post",
+                "parameters": [
+                    {
+                        "name": "file_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "File Id"
+                        }
+                    },
+                    {
+                        "name": "document_type",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Document Type"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/documents/list": {
+            "get": {
+                "tags": [
+                    "documents",
+                    "documents"
+                ],
+                "summary": "List Documents",
+                "description": "List uploaded documents.\n\nArgs:\n    limit: Maximum number of documents to return\n    offset: Number of documents to skip\n\nReturns:\n    List of document metadata",
+                "operationId": "list_documents_api_v1_documents_list_get",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 50,
+                            "title": "Limit"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 0,
+                            "title": "Offset"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/documents/{file_id}": {
+            "delete": {
+                "tags": [
+                    "documents",
+                    "documents"
+                ],
+                "summary": "Delete Document",
+                "description": "Delete an uploaded document.\n\nArgs:\n    file_id: The file ID to delete\n\nReturns:\n    Deletion confirmation",
+                "operationId": "delete_document_api_v1_documents__file_id__delete",
+                "parameters": [
+                    {
+                        "name": "file_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "File Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/security/secrets/validate": {
+            "get": {
+                "tags": [
+                    "security",
+                    "security"
+                ],
+                "summary": "Validate Secrets",
+                "description": "Validate that all required secrets are available.\n\nRequires admin authentication.\n\nReturns:\n    Validation results for each secret type",
+                "operationId": "validate_secrets_api_v1_security_secrets_validate_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "APIKeyHeader": []
+                    },
+                    {
+                        "APIKeyQuery": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/security/secrets/refresh": {
+            "post": {
+                "tags": [
+                    "security",
+                    "security"
+                ],
+                "summary": "Refresh Secrets",
+                "description": "Refresh all cached secrets.\n\nRequires admin authentication.\n\nReturns:\n    Refresh status",
+                "operationId": "refresh_secrets_api_v1_security_secrets_refresh_post",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "APIKeyHeader": []
+                    },
+                    {
+                        "APIKeyQuery": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/security/secrets/list": {
+            "get": {
+                "tags": [
+                    "security",
+                    "security"
+                ],
+                "summary": "List Secret Types",
+                "description": "List all available secret types (not values).\n\nRequires admin authentication.\n\nReturns:\n    List of secret types",
+                "operationId": "list_secret_types_api_v1_security_secrets_list_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/security/key-vault/status": {
+            "get": {
+                "tags": [
+                    "security",
+                    "security"
+                ],
+                "summary": "Key Vault Status",
+                "description": "Get Key Vault connection status.\n\nPublic endpoint - no authentication required.\n\nReturns:\n    Key Vault connection status",
+                "operationId": "key_vault_status_api_v1_security_key_vault_status_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/security/config/masked": {
+            "get": {
+                "tags": [
+                    "security",
+                    "security"
+                ],
+                "summary": "Get Masked Config",
+                "description": "Get current configuration with masked secrets.\n\nPublic endpoint - returns safely masked configuration.\n\nReturns:\n    Configuration with masked sensitive values",
+                "operationId": "get_masked_config_api_v1_security_config_masked_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/health": {
+            "get": {
+                "tags": [
+                    "admin",
+                    "admin"
+                ],
+                "summary": "Get System Health",
+                "description": "Get health status of all agents.",
+                "operationId": "get_system_health_api_v1_admin_health_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/health/{agent_id}": {
+            "get": {
+                "tags": [
+                    "admin",
+                    "admin"
+                ],
+                "summary": "Get Agent Health",
+                "description": "Get health status of a specific agent.",
+                "operationId": "get_agent_health_api_v1_admin_health__agent_id__get",
+                "parameters": [
+                    {
+                        "name": "agent_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Agent Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/query": {
+            "post": {
+                "tags": [
+                    "admin",
+                    "admin"
+                ],
+                "summary": "Submit Admin Query",
+                "description": "Submit a query with debug mode enabled.",
+                "operationId": "submit_admin_query_api_v1_admin_query_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/QueryRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/query/{query_id}": {
+            "get": {
+                "tags": [
+                    "admin",
+                    "admin"
+                ],
+                "summary": "Get Query Status",
+                "description": "Get detailed status of a query.",
+                "operationId": "get_query_status_api_v1_admin_query__query_id__get",
+                "parameters": [
+                    {
+                        "name": "query_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Query Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/query/{query_id}/stream": {
+            "get": {
+                "tags": [
+                    "admin",
+                    "admin"
+                ],
+                "summary": "Stream Query Status",
+                "description": "Stream real-time updates for a query using Server-Sent Events.",
+                "operationId": "stream_query_status_api_v1_admin_query__query_id__stream_get",
+                "parameters": [
+                    {
+                        "name": "query_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Query Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/queries/active": {
+            "get": {
+                "tags": [
+                    "admin",
+                    "admin"
+                ],
+                "summary": "Get Active Queries",
+                "description": "Get all active queries.",
+                "operationId": "get_active_queries_api_v1_admin_queries_active_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/queries/history": {
+            "get": {
+                "tags": [
+                    "admin",
+                    "admin"
+                ],
+                "summary": "Get Query History",
+                "description": "Get query history.",
+                "operationId": "get_query_history_api_v1_admin_queries_history_get",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "maximum": 500,
+                            "default": 50,
+                            "title": "Limit"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/communications": {
+            "get": {
+                "tags": [
+                    "admin",
+                    "admin"
+                ],
+                "summary": "Get Recent Communications",
+                "description": "Get recent agent communications.",
+                "operationId": "get_recent_communications_api_v1_admin_communications_get",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "maximum": 1000,
+                            "default": 100,
+                            "title": "Limit"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/communications/query/{query_id}": {
+            "get": {
+                "tags": [
+                    "admin",
+                    "admin"
+                ],
+                "summary": "Get Query Communications",
+                "description": "Get all communications for a specific query.",
+                "operationId": "get_query_communications_api_v1_admin_communications_query__query_id__get",
+                "parameters": [
+                    {
+                        "name": "query_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Query Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/metrics": {
+            "get": {
+                "tags": [
+                    "admin",
+                    "admin"
+                ],
+                "summary": "Get System Metrics",
+                "description": "Get system-wide metrics.",
+                "operationId": "get_system_metrics_api_v1_admin_metrics_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/metrics/tokens": {
+            "get": {
+                "tags": [
+                    "admin",
+                    "admin"
+                ],
+                "summary": "Get Token Usage",
+                "description": "Get token usage over time.",
+                "operationId": "get_token_usage_api_v1_admin_metrics_tokens_get",
+                "parameters": [
+                    {
+                        "name": "period",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^(hour|day|week|month)$",
+                            "default": "day",
+                            "title": "Period"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/metrics/agent/{agent_id}": {
+            "get": {
+                "tags": [
+                    "admin",
+                    "admin"
+                ],
+                "summary": "Get Agent Metrics",
+                "description": "Get metrics for a specific agent.",
+                "operationId": "get_agent_metrics_api_v1_admin_metrics_agent__agent_id__get",
+                "parameters": [
+                    {
+                        "name": "agent_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Agent Id"
+                        }
+                    },
+                    {
+                        "name": "period",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "day",
+                            "title": "Period"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/tasks/{query_id}": {
+            "get": {
+                "tags": [
+                    "admin",
+                    "admin"
+                ],
+                "summary": "Get Task Distribution",
+                "description": "Get task distribution for a query.",
+                "operationId": "get_task_distribution_api_v1_admin_tasks__query_id__get",
+                "parameters": [
+                    {
+                        "name": "query_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Query Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/agents/{agent_id}/restart": {
+            "post": {
+                "tags": [
+                    "admin-operations",
+                    "admin-operations"
+                ],
+                "summary": "Restart Agent",
+                "description": "Restart an agent (simulated in local development).",
+                "operationId": "restart_agent_api_v1_admin_agents__agent_id__restart_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "agent_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Agent Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/agents/{agent_id}/scale": {
+            "post": {
+                "tags": [
+                    "admin-operations",
+                    "admin-operations"
+                ],
+                "summary": "Scale Agent",
+                "description": "Scale agent replicas (for future use).",
+                "operationId": "scale_agent_api_v1_admin_agents__agent_id__scale_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "agent_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Agent Id"
+                        }
+                    },
+                    {
+                        "name": "replicas",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Replicas"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/cache/clear": {
+            "post": {
+                "tags": [
+                    "admin-operations",
+                    "admin-operations"
+                ],
+                "summary": "Clear All Cache",
+                "description": "Clear cache for all agents.",
+                "operationId": "clear_all_cache_api_v1_admin_cache_clear_post",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/admin/cache/clear/{agent_id}": {
+            "post": {
+                "tags": [
+                    "admin-operations",
+                    "admin-operations"
+                ],
+                "summary": "Clear Agent Cache",
+                "description": "Clear cache for a specific agent.",
+                "operationId": "clear_agent_cache_api_v1_admin_cache_clear__agent_id__post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "agent_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Agent Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/processing/mode": {
+            "post": {
+                "tags": [
+                    "admin-operations",
+                    "admin-operations"
+                ],
+                "summary": "Set Processing Mode",
+                "description": "Switch between real and mock processing modes.",
+                "operationId": "set_processing_mode_api_v1_admin_processing_mode_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "mode",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^(real|mock)$",
+                            "title": "Mode"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/communications/recent": {
+            "get": {
+                "tags": [
+                    "admin-operations",
+                    "admin-operations"
+                ],
+                "summary": "Get Recent Communications",
+                "description": "Get recent agent communications (admin view with full details).",
+                "operationId": "get_recent_communications_api_v1_admin_communications_recent_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "maximum": 1000,
+                            "default": 100,
+                            "title": "Limit"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "APIKeyRequest": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description"
+                    },
+                    "roles": {
+                        "items": {
+                            "$ref": "#/components/schemas/UserRole"
+                        },
+                        "type": "array",
+                        "title": "Roles"
+                    },
+                    "scopes": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Scopes"
+                    },
+                    "expires_in_days": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Expires In Days"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ],
+                "title": "APIKeyRequest",
+                "description": "API key creation request."
+            },
+            "APIKeyResponse": {
+                "properties": {
+                    "api_key": {
+                        "type": "string",
+                        "title": "Api Key"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "expires_in_days": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Expires In Days"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "api_key",
+                    "name",
+                    "expires_in_days"
+                ],
+                "title": "APIKeyResponse",
+                "description": "API key response."
+            },
+            "AgentInfo": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "title": "Id"
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/AgentType"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "version": {
+                        "type": "string",
+                        "title": "Version"
+                    },
+                    "capabilities": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Capabilities"
+                    },
+                    "status": {
+                        "type": "string",
+                        "title": "Status",
+                        "default": "active"
+                    },
+                    "endpoint": {
+                        "type": "string",
+                        "title": "Endpoint"
+                    },
+                    "heartbeat_interval": {
+                        "type": "integer",
+                        "title": "Heartbeat Interval",
+                        "default": 30
+                    },
+                    "last_heartbeat": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Last Heartbeat"
+                    },
+                    "metadata": {
+                        "type": "object",
+                        "title": "Metadata"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "type",
+                    "name",
+                    "version",
+                    "capabilities",
+                    "endpoint"
+                ],
+                "title": "AgentInfo",
+                "description": "Information about an agent."
+            },
+            "AgentRegistration": {
+                "properties": {
+                    "agent_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "title": "Agent Id"
+                    },
+                    "agent_type": {
+                        "$ref": "#/components/schemas/AgentType"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "version": {
+                        "type": "string",
+                        "title": "Version"
+                    },
+                    "capabilities": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Capabilities"
+                    },
+                    "endpoint": {
+                        "type": "string",
+                        "title": "Endpoint"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "agent_id",
+                    "agent_type",
+                    "name",
+                    "version",
+                    "capabilities",
+                    "endpoint"
+                ],
+                "title": "AgentRegistration",
+                "description": "Agent registration request."
+            },
+            "AgentType": {
+                "type": "string",
+                "enum": [
+                    "strategy",
+                    "market_intel",
+                    "financial_analyst",
+                    "cx_insights",
+                    "it_analyst",
+                    "risk_analyst",
+                    "compliance_analyst"
+                ],
+                "title": "AgentType",
+                "description": "Types of agents in the system."
+            },
+            "Body_login_for_token_api_v1_auth_token_post": {
+                "properties": {
+                    "grant_type": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "pattern": "password"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Grant Type"
+                    },
+                    "username": {
+                        "type": "string",
+                        "title": "Username"
+                    },
+                    "password": {
+                        "type": "string",
+                        "title": "Password"
+                    },
+                    "scope": {
+                        "type": "string",
+                        "title": "Scope",
+                        "default": ""
+                    },
+                    "client_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Client Id"
+                    },
+                    "client_secret": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Client Secret"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "username",
+                    "password"
+                ],
+                "title": "Body_login_for_token_api_v1_auth_token_post"
+            },
+            "Body_upload_document_api_v1_documents_upload_post": {
+                "properties": {
+                    "file": {
+                        "type": "string",
+                        "format": "binary",
+                        "title": "File"
+                    },
+                    "document_type": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Document Type"
+                    },
+                    "agent_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Agent Id"
+                    },
+                    "task_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Task Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "file"
+                ],
+                "title": "Body_upload_document_api_v1_documents_upload_post"
+            },
+            "Body_upload_file_api_v1_files_upload_post": {
+                "properties": {
+                    "file": {
+                        "type": "string",
+                        "format": "binary",
+                        "title": "File"
+                    },
+                    "scope": {
+                        "$ref": "#/components/schemas/FileScope",
+                        "default": "global"
+                    },
+                    "project_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Project Id"
+                    },
+                    "category": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/FileCategory"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "tags": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tags"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "file"
+                ],
+                "title": "Body_upload_file_api_v1_files_upload_post"
+            },
+            "Body_upload_project_file_api_v1_files_project__project_id__upload_post": {
+                "properties": {
+                    "file": {
+                        "type": "string",
+                        "format": "binary",
+                        "title": "File"
+                    },
+                    "category": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/FileCategory"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "tags": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tags"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "file"
+                ],
+                "title": "Body_upload_project_file_api_v1_files_project__project_id__upload_post"
+            },
+            "ConversationEntry": {
+                "properties": {
+                    "entry_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "title": "Entry Id"
+                    },
+                    "project_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "title": "Project Id"
+                    },
+                    "timestamp": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Timestamp"
+                    },
+                    "query": {
+                        "$ref": "#/components/schemas/QueryRequest"
+                    },
+                    "result": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/QueryResult"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "is_followup": {
+                        "type": "boolean",
+                        "title": "Is Followup",
+                        "default": false
+                    },
+                    "parent_entry_id": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Parent Entry Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "project_id",
+                    "query"
+                ],
+                "title": "ConversationEntry",
+                "description": "Single entry in a project conversation"
+            },
+            "FileCategory": {
+                "type": "string",
+                "enum": [
+                    "financial_analysis",
+                    "market_intelligence",
+                    "customer_insights",
+                    "it_landscape",
+                    "risk_assessment",
+                    "compliance",
+                    "general"
+                ],
+                "title": "FileCategory",
+                "description": "Category of uploaded file for RAG routing"
+            },
+            "FileMetadata": {
+                "properties": {
+                    "file_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "title": "File Id"
+                    },
+                    "filename": {
+                        "type": "string",
+                        "title": "Filename"
+                    },
+                    "file_path": {
+                        "type": "string",
+                        "title": "File Path"
+                    },
+                    "file_size": {
+                        "type": "integer",
+                        "title": "File Size"
+                    },
+                    "content_type": {
+                        "type": "string",
+                        "title": "Content Type"
+                    },
+                    "scope": {
+                        "$ref": "#/components/schemas/FileScope"
+                    },
+                    "category": {
+                        "$ref": "#/components/schemas/FileCategory",
+                        "default": "general"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/FileStatus",
+                        "default": "uploaded"
+                    },
+                    "uploaded_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Uploaded At"
+                    },
+                    "processed_at": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Processed At"
+                    },
+                    "project_id": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Project Id"
+                    },
+                    "uploader_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Uploader Id"
+                    },
+                    "chunk_count": {
+                        "type": "integer",
+                        "title": "Chunk Count",
+                        "default": 0
+                    },
+                    "vector_count": {
+                        "type": "integer",
+                        "title": "Vector Count",
+                        "default": 0
+                    },
+                    "error_message": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Error Message"
+                    },
+                    "document_metadata": {
+                        "type": "object",
+                        "title": "Document Metadata"
+                    },
+                    "tags": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Tags"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "filename",
+                    "file_path",
+                    "file_size",
+                    "content_type",
+                    "scope"
+                ],
+                "title": "FileMetadata",
+                "description": "Metadata for an uploaded file"
+            },
+            "FileProcessingResult": {
+                "properties": {
+                    "file_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "title": "File Id"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/FileStatus"
+                    },
+                    "chunk_count": {
+                        "type": "integer",
+                        "title": "Chunk Count",
+                        "default": 0
+                    },
+                    "vector_count": {
+                        "type": "integer",
+                        "title": "Vector Count",
+                        "default": 0
+                    },
+                    "processing_time": {
+                        "type": "number",
+                        "title": "Processing Time",
+                        "default": 0.0
+                    },
+                    "error_message": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Error Message"
+                    },
+                    "metadata": {
+                        "type": "object",
+                        "title": "Metadata"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "file_id",
+                    "status"
+                ],
+                "title": "FileProcessingResult",
+                "description": "Result of file processing for RAG"
+            },
+            "FileScope": {
+                "type": "string",
+                "enum": [
+                    "global",
+                    "project"
+                ],
+                "title": "FileScope",
+                "description": "Scope of a file in the system"
+            },
+            "FileStatus": {
+                "type": "string",
+                "enum": [
+                    "uploaded",
+                    "processing",
+                    "processed",
+                    "failed",
+                    "deleted"
+                ],
+                "title": "FileStatus",
+                "description": "Status of an uploaded file"
+            },
+            "GlobalFileStats": {
+                "properties": {
+                    "total_files": {
+                        "type": "integer",
+                        "title": "Total Files",
+                        "default": 0
+                    },
+                    "total_size_bytes": {
+                        "type": "integer",
+                        "title": "Total Size Bytes",
+                        "default": 0
+                    },
+                    "files_by_category": {
+                        "additionalProperties": {
+                            "type": "integer"
+                        },
+                        "type": "object",
+                        "title": "Files By Category"
+                    },
+                    "files_by_status": {
+                        "additionalProperties": {
+                            "type": "integer"
+                        },
+                        "type": "object",
+                        "title": "Files By Status"
+                    },
+                    "recent_uploads": {
+                        "items": {
+                            "$ref": "#/components/schemas/FileMetadata"
+                        },
+                        "type": "array",
+                        "title": "Recent Uploads"
+                    }
+                },
+                "type": "object",
+                "title": "GlobalFileStats",
+                "description": "Statistics about global files"
+            },
+            "HTTPValidationError": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        },
+                        "type": "array",
+                        "title": "Detail"
+                    }
+                },
+                "type": "object",
+                "title": "HTTPValidationError"
+            },
+            "HealthResponse": {
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "title": "Status"
+                    },
+                    "timestamp": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Timestamp"
+                    },
+                    "version": {
+                        "type": "string",
+                        "title": "Version"
+                    },
+                    "services": {
+                        "type": "object",
+                        "title": "Services"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "status",
+                    "timestamp",
+                    "version",
+                    "services"
+                ],
+                "title": "HealthResponse",
+                "description": "Health check response model."
+            },
+            "LoginRequest": {
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "title": "Username"
+                    },
+                    "password": {
+                        "type": "string",
+                        "title": "Password"
+                    },
+                    "scopes": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Scopes"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "username",
+                    "password"
+                ],
+                "title": "LoginRequest",
+                "description": "Login request model."
+            },
+            "LoginResponse": {
+                "properties": {
+                    "access_token": {
+                        "type": "string",
+                        "title": "Access Token"
+                    },
+                    "refresh_token": {
+                        "type": "string",
+                        "title": "Refresh Token"
+                    },
+                    "token_type": {
+                        "type": "string",
+                        "title": "Token Type",
+                        "default": "bearer"
+                    },
+                    "expires_in": {
+                        "type": "integer",
+                        "title": "Expires In"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "access_token",
+                    "refresh_token",
+                    "expires_in"
+                ],
+                "title": "LoginResponse",
+                "description": "Login response model."
+            },
+            "Message": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "title": "Id"
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/MessageType"
+                    },
+                    "source_agent_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "title": "Source Agent Id"
+                    },
+                    "target_agent_id": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Target Agent Id"
+                    },
+                    "timestamp": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Timestamp"
+                    },
+                    "correlation_id": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Correlation Id"
+                    },
+                    "payload": {
+                        "type": "object",
+                        "title": "Payload"
+                    },
+                    "metadata": {
+                        "type": "object",
+                        "title": "Metadata"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "type",
+                    "source_agent_id",
+                    "payload"
+                ],
+                "title": "Message",
+                "description": "Base message structure for agent communication."
+            },
+            "MessageType": {
+                "type": "string",
+                "enum": [
+                    "task_request",
+                    "task_response",
+                    "status_update",
+                    "error",
+                    "heartbeat",
+                    "registration",
+                    "discovery",
+                    "data_request",
+                    "data_response"
+                ],
+                "title": "MessageType",
+                "description": "Types of messages between agents."
+            },
+            "Project": {
+                "properties": {
+                    "project_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "title": "Project Id"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created At"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Updated At"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/ProjectStatus",
+                        "default": "active"
+                    },
+                    "initial_query": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Initial Query"
+                    },
+                    "conversation_history": {
+                        "items": {
+                            "$ref": "#/components/schemas/ConversationEntry"
+                        },
+                        "type": "array",
+                        "title": "Conversation History"
+                    },
+                    "files": {
+                        "items": {
+                            "$ref": "#/components/schemas/ProjectFile"
+                        },
+                        "type": "array",
+                        "title": "Files"
+                    },
+                    "metadata": {
+                        "type": "object",
+                        "title": "Metadata"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ],
+                "title": "Project",
+                "description": "Represents a project (session) in the system"
+            },
+            "ProjectCreateRequest": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description"
+                    },
+                    "initial_query": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Initial Query"
+                    },
+                    "metadata": {
+                        "type": "object",
+                        "title": "Metadata"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ],
+                "title": "ProjectCreateRequest",
+                "description": "Request to create a new project"
+            },
+            "ProjectFile": {
+                "properties": {
+                    "file_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "title": "File Id"
+                    },
+                    "project_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "title": "Project Id"
+                    },
+                    "filename": {
+                        "type": "string",
+                        "title": "Filename"
+                    },
+                    "file_path": {
+                        "type": "string",
+                        "title": "File Path"
+                    },
+                    "file_size": {
+                        "type": "integer",
+                        "title": "File Size"
+                    },
+                    "content_type": {
+                        "type": "string",
+                        "title": "Content Type"
+                    },
+                    "uploaded_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Uploaded At"
+                    },
+                    "processed": {
+                        "type": "boolean",
+                        "title": "Processed",
+                        "default": false
+                    },
+                    "metadata": {
+                        "type": "object",
+                        "title": "Metadata"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "project_id",
+                    "filename",
+                    "file_path",
+                    "file_size",
+                    "content_type"
+                ],
+                "title": "ProjectFile",
+                "description": "Represents a file uploaded to a project"
+            },
+            "ProjectQueryRequest": {
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "title": "Query"
+                    },
+                    "is_followup": {
+                        "type": "boolean",
+                        "title": "Is Followup",
+                        "default": false
+                    },
+                    "parent_entry_id": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Parent Entry Id"
+                    },
+                    "include_project_files": {
+                        "type": "boolean",
+                        "title": "Include Project Files",
+                        "default": true
+                    },
+                    "additional_context": {
+                        "anyOf": [
+                            {
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Additional Context"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "query"
+                ],
+                "title": "ProjectQueryRequest",
+                "description": "Request to execute a query within a project context"
+            },
+            "ProjectRefreshRequest": {
+                "properties": {
+                    "include_followups": {
+                        "type": "boolean",
+                        "title": "Include Followups",
+                        "default": true
+                    },
+                    "use_cached_results": {
+                        "type": "boolean",
+                        "title": "Use Cached Results",
+                        "default": false
+                    }
+                },
+                "type": "object",
+                "title": "ProjectRefreshRequest",
+                "description": "Request to refresh all queries in a project"
+            },
+            "ProjectStatus": {
+                "type": "string",
+                "enum": [
+                    "active",
+                    "archived",
+                    "deleted"
+                ],
+                "title": "ProjectStatus",
+                "description": "Status of a project"
+            },
+            "ProjectUpdateRequest": {
+                "properties": {
+                    "name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Name"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description"
+                    },
+                    "status": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/ProjectStatus"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "metadata": {
+                        "anyOf": [
+                            {
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Metadata"
+                    }
+                },
+                "type": "object",
+                "title": "ProjectUpdateRequest",
+                "description": "Request to update a project"
+            },
+            "QueryRequest": {
+                "properties": {
+                    "query_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "title": "Query Id"
+                    },
+                    "query": {
+                        "type": "string",
+                        "title": "Query"
+                    },
+                    "context": {
+                        "type": "object",
+                        "title": "Context"
+                    },
+                    "focus_areas": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Focus Areas"
+                    },
+                    "timeframe": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Timeframe"
+                    },
+                    "user_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "User Id"
+                    },
+                    "session_id": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Session Id"
+                    },
+                    "debug": {
+                        "type": "boolean",
+                        "title": "Debug",
+                        "default": false
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "query"
+                ],
+                "title": "QueryRequest",
+                "description": "User query request."
+            },
+            "QueryResult": {
+                "properties": {
+                    "query_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "title": "Query Id"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/TaskStatus"
+                    },
+                    "summary": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Summary"
+                    },
+                    "sections": {
+                        "type": "object",
+                        "title": "Sections"
+                    },
+                    "visualizations": {
+                        "items": {
+                            "type": "object"
+                        },
+                        "type": "array",
+                        "title": "Visualizations"
+                    },
+                    "sources": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Sources"
+                    },
+                    "confidence_score": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Confidence Score"
+                    },
+                    "execution_time_ms": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Execution Time Ms"
+                    },
+                    "errors": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Errors"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "query_id",
+                    "status"
+                ],
+                "title": "QueryResult",
+                "description": "Result of a query."
+            },
+            "RefreshRequest": {
+                "properties": {
+                    "refresh_token": {
+                        "type": "string",
+                        "title": "Refresh Token"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "refresh_token"
+                ],
+                "title": "RefreshRequest",
+                "description": "Refresh token request."
+            },
+            "TaskStatus": {
+                "type": "string",
+                "enum": [
+                    "pending",
+                    "in_progress",
+                    "completed",
+                    "failed",
+                    "cancelled",
+                    "partial"
+                ],
+                "title": "TaskStatus",
+                "description": "Status of a task."
+            },
+            "TokenResponse": {
+                "properties": {
+                    "access_token": {
+                        "type": "string",
+                        "title": "Access Token"
+                    },
+                    "token_type": {
+                        "type": "string",
+                        "title": "Token Type",
+                        "default": "bearer"
+                    },
+                    "expires_in": {
+                        "type": "integer",
+                        "title": "Expires In"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "access_token",
+                    "expires_in"
+                ],
+                "title": "TokenResponse",
+                "description": "Token response model."
+            },
+            "UserInfo": {
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "title": "Username"
+                    },
+                    "roles": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Roles"
+                    },
+                    "scopes": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Scopes"
+                    },
+                    "metadata": {
+                        "type": "object",
+                        "title": "Metadata"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "username",
+                    "roles",
+                    "scopes",
+                    "metadata"
+                ],
+                "title": "UserInfo",
+                "description": "User information model."
+            },
+            "UserRole": {
+                "type": "string",
+                "enum": [
+                    "admin",
+                    "user",
+                    "agent",
+                    "viewer",
+                    "service"
+                ],
+                "title": "UserRole",
+                "description": "User roles for authorization."
+            },
+            "ValidationError": {
+                "properties": {
+                    "loc": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Location"
+                    },
+                    "msg": {
+                        "type": "string",
+                        "title": "Message"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Error Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "title": "ValidationError"
+            }
+        },
+        "securitySchemes": {
+            "HTTPBearer": {
+                "type": "http",
+                "scheme": "bearer"
+            },
+            "APIKeyHeader": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "X-API-Key"
+            },
+            "APIKeyQuery": {
+                "type": "apiKey",
+                "in": "query",
+                "name": "api_key"
+            }
+        }
+    }
+}

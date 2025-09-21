@@ -1,0 +1,124 @@
+.overview-positioning {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+}
+
+.positioning-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.positioning-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.positioning-text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #4a5568;
+  margin: 0;
+}
+
+.positioning-implications {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.positioning-implications .positioning-text {
+  margin: 0;
+}
+
+.positioning-cards-container {
+  display: grid;
+  gap: 20px;
+  width: 100%;
+}
+
+.positioning-cards-container.cards-1 {
+  grid-template-columns: 1fr;
+}
+
+.positioning-cards-container.cards-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.positioning-cards-container.cards-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Dynamic layout for new chart rules */
+.positioning-cards-container.dynamic-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.positioning-cards-container.dynamic-layout .report-card-wrapper {
+  display: flex;
+  min-height: 400px;
+}
+
+.positioning-cards-container.dynamic-layout .report-card-wrapper.half-width {
+  flex: 0 0 calc(50% - 10px);
+  max-width: calc(50% - 10px);
+}
+
+.positioning-cards-container.dynamic-layout .report-card-wrapper.full-width {
+  flex: 0 0 100%;
+}
+
+.positioning-cards-container.dynamic-layout .report-card-wrapper > * {
+  width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1400px) {
+  .positioning-cards-container.cards-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .positioning-cards-container.cards-3,
+  .positioning-cards-container.cards-2 {
+    grid-template-columns: 1fr;
+  }
+  
+  .positioning-cards-container.dynamic-layout .report-card-wrapper.half-width {
+    flex: 0 0 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .overview-positioning {
+    padding: 16px;
+  }
+
+  .positioning-title {
+    font-size: 18px;
+  }
+
+  .positioning-text {
+    font-size: 14px;
+  }
+
+  .positioning-cards-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .positioning-cards-container.dynamic-layout .report-card-wrapper.half-width,
+  .positioning-cards-container.dynamic-layout .report-card-wrapper.full-width {
+    flex: 0 0 100%;
+  }
+}

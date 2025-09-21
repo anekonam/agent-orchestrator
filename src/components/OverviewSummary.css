@@ -1,0 +1,92 @@
+.overview-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+}
+
+.summary-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 12px 0;
+}
+
+.summary-text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #4a5568;
+  margin: 0;
+}
+
+
+.key-insights-section .section-title {
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.insights-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.insight-item {
+  position: relative;
+  padding-left: 24px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #4a5568;
+}
+
+.insight-item::before {
+  content: "•";
+  position: absolute;
+  left: 8px;
+  font-weight: bold;
+}
+
+/* KPI card styles moved to KeyInsightCardGrid.css */
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .overview-summary {
+    padding: 16px;
+  }
+
+  .overview-summary-footer {
+    margin-left: -16px;
+    margin-right: -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .summary-text,
+  .insight-item {
+    font-size: 14px;
+  }
+}
+
+/* Footer section with top border */
+.overview-summary-footer {
+  border-top: 2px solid var(--Background-Page, #F1F3F6);
+  padding-top: 16px;
+  margin-top: 16px;
+  margin-left: -24px;
+  margin-right: -24px;
+  padding-left: 24px;
+  padding-right: 24px;
+}

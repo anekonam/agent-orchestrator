@@ -1,0 +1,178 @@
+.next-steps {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+}
+
+.steps-timeline {
+  border-radius: 16px;
+  padding: 16px;
+border: 2px solid var(--Background-Page, #F1F3F6);
+}
+
+.step-item {
+  display: flex;
+  gap: 20px;
+  position: relative;
+}
+
+.step-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.step-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #f3f4f6;
+  border: 2px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.step-circle.completed {
+  background: #d1fae5;
+  border-color: #008585;
+}
+
+.step-circle:not(.completed):hover {
+  background: #e5e7eb;
+  transform: scale(1.05);
+}
+
+.step-number {
+  font-size: 16px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.step-connector {
+  width: 2px;
+  height: 80px;
+  background: #e5e7eb;
+  margin-top: 4px;
+  position: relative;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.step-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.step-timeline {
+  font-size: 13px;
+  font-weight: 500;
+  color: #008585;
+  background: #d1fae5;
+  padding: 4px 12px;
+  border-radius: 12px;
+}
+
+.step-description {
+color: var(--Light-Foreground-Primary, var(--Foreground-Primary, #222325));
+
+/* Headline Regular */
+font-family: "Circular Std";
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px; /* 125% */
+letter-spacing: 0.33px;
+}
+
+.step-extra {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+.step-extra-label {
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.step-extra-value {
+  color: #4a5568;
+}
+
+/* Animation for completed steps */
+@keyframes checkIn {
+  0% {
+    transform: scale(0) rotate(-45deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2) rotate(10deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.step-circle.completed svg {
+  animation: checkIn 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .next-steps {
+    padding: 16px;
+  }
+
+  .next-steps-title {
+    font-size: 18px;
+  }
+
+  .step-item {
+    gap: 16px;
+  }
+
+
+  .step-title {
+    font-size: 15px;
+  }
+
+  .step-timeline {
+    font-size: 12px;
+    padding: 3px 10px;
+  }
+
+  .step-description {
+    font-size: 13px;
+  }
+
+  .step-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}

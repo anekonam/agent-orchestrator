@@ -1,0 +1,93 @@
+.metric-card {
+  border-radius: 12px;
+  padding: 16px;
+  min-height: 100px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: space-between;
+  border-radius: 16px;
+  border: 2px solid var(--Background-Page, #F1F3F6);
+  background: var(--Background-Content, #FFF);
+}
+
+
+.metric-card-label {
+color: var(--Light-Foreground-Primary, #222325);
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: 14px; /* 116.667% */
+letter-spacing: 0.33px;
+}
+
+.metric-card-value-container {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  margin-bottom: 4px;
+}
+
+.metric-main-value {
+  color: var(--Light-Accent-Accent, var(--Accent-Accent, #003DA6));
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; /* 125% */
+  letter-spacing: 0.33px;
+}
+
+.metric-value-large {
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  line-height: 32px !important;
+}
+
+.metric-unit {
+  color: var(--Light-Accent-Accent, var(--Accent-Accent, #003DA6));
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 14px;
+  letter-spacing: 0.33px;
+  margin-left: 2px;
+}
+
+.metric-subtitle {
+  color: var(--Light-Foreground-Secondary, #45484F);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 14px; /* 127.273% */
+  letter-spacing: 0.33px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .metric-card {
+    min-height: 100px;
+    padding: 16px;
+  }
+  
+  .metric-main-value {
+    font-size: 32px;
+  }
+  
+  .metric-value-large {
+    font-size: 40px !important;
+    line-height: 44px !important;
+  }
+  
+  .metric-unit {
+    font-size: 18px;
+  }
+  
+  .metric-card-label {
+    font-size: 13px;
+  }
+  
+  .metric-subtitle {
+    font-size: 12px;
+  }
+}

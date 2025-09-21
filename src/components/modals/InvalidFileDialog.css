@@ -1,0 +1,75 @@
+/* Invalid File Dialog Styles */
+.invalid-file-dialog-modal.modal-dialog {
+  width: 500px;
+  max-width: 90vw;
+  border-radius: 16px;
+}
+
+.invalid-file-dialog-modal .modal-header {
+  display: none;
+}
+
+.invalid-file-dialog-modal .modal-content {
+  padding: 0;
+}
+
+.invalid-file-dialog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 32px 32px;
+  text-align: center;
+}
+
+.invalid-file-icon-container {
+  margin-bottom: 24px;
+}
+
+.invalid-file-icon {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+
+.invalid-file-title {
+  margin: 0 0 12px 0;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+  letter-spacing: 0.33px;
+  color: var(--Light-Foreground-Primary, #222325);
+}
+
+.invalid-file-subtitle {
+  margin: 0 0 32px 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.33px;
+  color: var(--Light-Foreground-Secondary, #45484F);
+  max-width: 400px;
+}
+
+.invalid-file-button {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: linear-gradient(290deg, #003DA6 21.88%, #2F80ED 100%);
+  color: white;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.33px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.invalid-file-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 61, 166, 0.3);
+}
+
+.invalid-file-button:active {
+  transform: translateY(0);
+}

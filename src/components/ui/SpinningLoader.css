@@ -1,0 +1,125 @@
+/* Spinning Loader Component Styles */
+.spinning-loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.spinning-loader {
+  display: inline-block;
+  position: relative;
+}
+
+.spinning-loader-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px solid var(--color-button-secondary-bg);
+  border-top: 3px solid var(--color-primary-blue);
+  animation: spinningLoaderRotate 1s linear infinite;
+}
+
+/* Size variants */
+.spinning-loader-small {
+  width: 20px;
+  height: 20px;
+}
+
+.spinning-loader-small .spinning-loader-circle {
+  border-width: 2px;
+  border-top-width: 2px;
+}
+
+.spinning-loader-medium {
+  width: 32px;
+  height: 32px;
+}
+
+.spinning-loader-large {
+  width: 48px;
+  height: 48px;
+}
+
+.spinning-loader-large .spinning-loader-circle {
+  border-width: 4px;
+  border-top-width: 4px;
+}
+
+/* Spinning animation */
+@keyframes spinningLoaderRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Optional text */
+.spinning-loader-text {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+  text-align: center;
+  margin-top: 4px;
+}
+
+/* Full section coverage variants */
+.spinning-loader-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinning-loader-section {
+  width: 100%;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-background-tertiary);
+  border-radius: 8px;
+}
+
+/* Dashboard specific styles */
+.dashboard-loading {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-background-tertiary);
+}
+
+.projects-loading {
+  width: 100%;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .spinning-loader-text {
+    font-size: 12px;
+  }
+  
+  .dashboard-loading {
+    height: 300px;
+  }
+  
+  .projects-loading {
+    min-height: 200px;
+  }
+}

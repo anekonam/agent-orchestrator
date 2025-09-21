@@ -1,0 +1,38 @@
+/* Empty Project State Styles */
+.empty-state {
+  text-align: center;
+  margin-top: 4rem;
+}
+
+.illustration {
+  max-width: 200px;
+  max-height: 200px;
+  width: auto;
+  height: auto;
+}
+
+.empty-content {
+  margin-bottom: 1rem;
+}
+
+.empty-content h3 {
+  color: var(--color-text-primary);
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.empty-content p {
+  color: var(--color-text-secondary);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.empty-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+/* .create-btn styles are in dashboard.css since it's shared with dashboard header */

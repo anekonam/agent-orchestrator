@@ -1,0 +1,233 @@
+.report-dialog-details {
+  padding: 0;
+  position: relative;
+}
+
+.report-dialog-details .chart-visualization {
+  height: auto !important;
+}
+
+/* Override modal styles for report dialog */
+.modal-dialog.report-dialog-modal {
+  position: relative;
+}
+
+.modal-dialog.report-dialog-modal .modal-header {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 0;
+  z-index: 10;
+  border: none;
+}
+
+.modal-dialog.report-dialog-modal .modal-content {
+  padding: 0;
+  max-height: 80vh;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 24px 0 24px;
+  margin-bottom: 24px;
+}
+
+.dialog-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: var(--Background-Page, #F1F3F6);
+  padding: 6px;
+}
+
+.dialog-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text-primary, #1f2937);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.dialog-chart {
+  padding: 0 24px;
+}
+
+/* Override ChartVisualization styles for dialog */
+.dialog-chart .chart-visualization {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+.dialog-chart .chart-title {
+  display: none;
+  /* Hide the chart title since we show it in the dialog header */
+}
+
+.dialog-chart .chart-container {
+  width: 100%;
+  height: 300px;
+  min-height: 300px;
+  overflow: hidden;
+}
+
+/* Add scrolling for tables specifically */
+.dialog-chart .table-visualization {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+.dialog-chart .table-visualization table {
+  width: 100%;
+  table-layout: auto;
+}
+
+/* Style scrollbar for better appearance */
+.dialog-chart .table-visualization::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.dialog-chart .table-visualization::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.dialog-chart .table-visualization::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.dialog-chart .table-visualization::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.dialog-sources {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+/* Override SourcesList styles for centered alignment in dialog */
+.dialog-sources .sources-list {
+  justify-content: center;
+}
+
+.dialog-insights {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 24px 24px 24px;
+}
+
+.insight-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.insight-title {
+  color: var(--Light-Foreground-Secondary, var(--Foreground-Secondary, #45484F));
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px;
+  /* 133.333% */
+  letter-spacing: 0.33px;
+}
+
+.impact-container {
+  border-radius: 8px;
+  background: var(--Background-Page, #F1F3F6);
+  padding: 16px;
+}
+
+
+.impact-container .insight-content {
+  color: var(--Light-Foreground-Primary, var(--Foreground-Primary, #222325));
+
+  /* Title 3 Bold */
+  font-family: "Circular Std";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 22px;
+  letter-spacing: 0.33px;
+}
+
+.impact-container .insight-title {
+  color: var(--Light-Accent-Accent, var(--Accent-Accent, #003DA6));
+  font-weight: 400;
+}
+
+
+.insight-content {
+  color: var(--Light-Foreground-Secondary, var(--Foreground-Secondary, #45484F));
+
+  /* Text Regular */
+  font-family: "Circular Std";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.33px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .report-dialog-details {
+    padding: 16px;
+  }
+
+  .dialog-header {
+    margin-bottom: 20px;
+  }
+
+  .dialog-icon {
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+  }
+
+  .dialog-title {
+    font-size: 16px;
+  }
+
+  .dialog-chart .chart-container {
+    height: 250px;
+    min-height: 250px;
+  }
+
+  /* Maintain table scrolling on mobile */
+  .dialog-chart .table-visualization {
+    max-height: 250px;
+  }
+
+  .dialog-sources {
+    padding: 16px 0;
+    margin-bottom: 20px;
+  }
+
+  .source-image {
+    width: 24px;
+    height: 24px;
+  }
+
+  .dialog-insights {
+    gap: 16px;
+  }
+
+  .insight-title {
+    font-size: 14px;
+  }
+
+  .insight-content {
+    font-size: 13px;
+  }
+}

@@ -1,0 +1,340 @@
+.tab-summary-card {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 2px solid var(--Background-Page, #F1F3F6);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 380px;
+  transition: all 0.2s ease;
+}
+
+.tab-summary-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.tab-summary-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: fit-content;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-summary-button:hover {
+  opacity: 0.8;
+}
+
+.tab-name {
+  color: var(--Light-Foreground-Secondary, var(--Foreground-Secondary, #45484F));
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px; /* 123.077% */
+  letter-spacing: 0.33px;
+  margin-right: 8px;
+}
+
+.tab-summary-button svg {
+  color: var(--Light-Accent-Accent, var(--Accent-Accent, #003DA6));
+  transition: transform 0.2s ease;
+}
+
+.tab-summary-button:hover svg {
+  transform: translateX(3px);
+}
+
+.tab-summary-title {
+  color: var(--Light-Foreground-Primary, var(--Foreground-Primary, #222325));
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px; /* 125% */
+  letter-spacing: 0.33px;
+  margin: 0 0 20px 0;
+  min-height: 44px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tab-summary-chart {
+  flex: 1 1 200px; /* More explicit flex specification */
+  margin-bottom: 20px;
+  min-height: 200px; /* Default for images */
+  height: 200px; /* Fixed height as fallback */
+  width: 100%;
+  min-width: 200px; /* Minimum width to prevent 0 width */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Larger height when displaying charts */
+.tab-summary-chart:has(.chart-visualization) {
+  min-height: 500px;
+  height: 500px;
+}
+
+/* Alternative approach for browsers that don't support :has() */
+.tab-summary-chart.with-chart,
+.tab-summary-chart.with-table {
+  min-height: 500px;
+  height: 500px;
+}
+
+/* Override ChartVisualization styles for tab summary card */
+.tab-summary-chart .chart-visualization {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.tab-summary-chart .chart-title {
+  display: none; /* Hide the chart title since we show it in the card */
+}
+
+.tab-summary-chart .chart-container {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 180px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* Force ResponsiveContainer dimensions in TabSummaryCard */
+.tab-summary-chart .recharts-responsive-container {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 200px !important;
+  min-height: 180px !important;
+}
+
+/* Larger ResponsiveContainer for charts */
+.tab-summary-chart.with-chart .recharts-responsive-container,
+.tab-summary-chart:has(.chart-visualization) .recharts-responsive-container {
+  min-height: 470px !important;
+}
+/* Image display styling */
+.tab-summary-image {
+  width: auto;
+  height: 100%;
+  min-height: 180px;
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center center;
+  border-radius: 8px;
+  background: transparent;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.tabcard-summary-footer {
+  display: flex;
+  align-items: center;
+  padding-top: 16px;
+  font-size: 13px;
+}
+
+.last-updated {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.last-updated-label {
+  color: var(--Light-Foreground-Tertiary, var(--Foreground-Tertiary, #687381));
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.33px;
+}
+
+.last-updated-date {
+  color: var(--Light-Foreground-Secondary, var(--Foreground-Secondary, #45484F));
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0.33px;
+}
+
+.footer-divider {
+  color: var(--Light-Foreground-Tertiary, var(--Foreground-Tertiary, #687381));
+  margin: 0 12px;
+  font-weight: 300;
+}
+
+.view-insight-button {
+  background: transparent;
+  border: none;
+  color: var(--Light-Accent-Accent, var(--Accent-Accent, #003DA6));
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0.33px;
+  cursor: pointer;
+  padding: 8px 0;
+  margin-left: auto;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.view-insight-button::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+}
+
+.view-insight-button:hover::after {
+  transform: scaleX(1);
+}
+
+.view-insight-button:hover {
+  opacity: 0.8;
+}
+
+.tab-summary-sources {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sources-label {
+  color: var(--Light-Foreground-Tertiary, var(--Foreground-Tertiary, #687381));
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.33px;
+}
+
+.sources-images {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.source-image {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  border-radius: 3px;
+  background: #f9fafb;
+  padding: 2px;
+}
+
+/* Container for tab summary cards */
+.tab-summary-cards-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 32px;
+  padding: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 968px) {
+  .tab-summary-cards-container {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .tab-summary-card {
+    min-height: 350px;
+    padding: 16px;
+  }
+  
+  .tab-summary-title {
+    font-size: 14px;
+    min-height: 36px;
+  }
+  
+  .tab-name {
+    font-size: 13px;
+  }
+  
+  .tab-summary-chart .chart-container {
+    min-height: 150px !important;
+  }
+  
+  .tab-summary-image {
+    min-height: 150px;
+    max-height: 100%;
+    max-width: 100%;
+  }
+  
+  .tab-summary-chart {
+    min-height: 170px;
+  }
+   
+  .tab-summary-chart.with-chart .recharts-responsive-container,
+  .tab-summary-chart:has(.chart-visualization) .recharts-responsive-container {
+    min-height: 370px !important;
+  }
+  
+  .tabcard-summary-footer {
+    font-size: 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .footer-divider {
+    display: none;
+  }
+  
+  .last-updated,
+  .tab-summary-sources {
+    width: 100%;
+  }
+}
+
+/* Table display styling */
+.tab-summary-chart.with-table {
+  min-height: 250px;
+  height: auto;
+  overflow: auto;
+}
+
+.tab-summary-chart.with-table .table-visualization {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+/* Full width card - spans entire grid */
+.full-width-card {
+  grid-column: 1 / -1;
+}

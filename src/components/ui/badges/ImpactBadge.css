@@ -1,0 +1,44 @@
+.impact-badge {
+color: var(--Light-Accent-Valid, var(--Accent-Valid, #008585));
+text-align: center;
+
+/* Caption Caps 2 Bold */
+font-family: "Circular Std";
+font-size: 12px;
+font-style: normal;
+font-weight: 700;
+line-height: 14px; /* 116.667% */
+letter-spacing: 0.33px;
+text-transform: uppercase;
+  transition: all 0.2s ease;
+  display: inline-flex;
+padding: 3px 8px;
+align-items: center;
+gap: 4px;
+border-radius: 4px;
+white-space: nowrap;
+}
+
+/* Impact level colors */
+.impact-badge.high-impact {
+  background: #D9F3F3;
+  color: #008585;
+}
+
+.impact-badge.medium-impact {
+  background: #CFE0FD;
+  color: #003DA6;
+}
+
+.impact-badge.low-impact {
+  background: #D5D8DB;
+  color: #45484F;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .impact-badge {
+    font-size: 11px;
+    padding: 3px 10px;
+  }
+}

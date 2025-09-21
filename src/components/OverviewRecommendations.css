@@ -1,0 +1,326 @@
+.overview-recommendations {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+
+.recommendations-title {
+  color: var(--Light-Foreground-Primary, var(--Foreground-Primary, #222325));
+
+  /* Headline Bold */
+  font-family: "Circular Std";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px;
+  /* 125% */
+  letter-spacing: 0.33px;
+}
+
+.recommendations-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+/* Bulleted list styling - matching Key Insights style */
+.recommendations-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.recommendation-list-item {
+  position: relative;
+  padding-left: 24px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #4a5568;
+}
+
+.recommendation-list-item::before {
+  content: "•";
+  position: absolute;
+  left: 8px;
+  font-weight: bold;
+}
+
+/* Card styling */
+.recommendation-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 17.5px;
+  border: 1px solid #E5E7EB;
+  background: #FFF;
+}
+
+/* Header badges */
+.recommendation-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.priority-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 6px;
+  text-align: center;
+
+  /* Caption Caps 2 Bold */
+  font-family: "Circular Std";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 14px;
+  /* 116.667% */
+  letter-spacing: 0.33px;
+  text-transform: uppercase;
+
+}
+
+/* Impact colors */
+.priority-badge.high-impact {
+  background: #D9F3F3;
+  /* light teal */
+  color: #008585;
+  /* teal */
+}
+
+.priority-badge.medium-impact {
+  background: #CFE0FD;
+  /* light red/orange */
+  color: #003DA6;
+  /* dark red */
+}
+
+.priority-badge.low-impact {
+  background: #D5D8DB;
+  /* light grey */
+  color: #45484F;
+  /* dark grey */
+}
+
+/* Timeline pill */
+.timeline-badge {
+  background: #f3f4f6;
+  color: #374151;
+  padding: 4px 12px;
+  color: var(--Light-Foreground-Secondary, var(--Foreground-Secondary, #45484F));
+  text-align: center;
+
+  /* Caption Caps 2 Bold */
+  font-family: "Circular Std";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 14px;
+  /* 116.667% */
+  letter-spacing: 0.33px;
+  text-transform: uppercase;
+  border-radius: 4px;
+  background: var(--Background-Page, #F1F3F6);
+}
+
+/* Title */
+.recommendation-title {
+  color: var(--Light-Foreground-Primary, var(--Foreground-Primary, #222325));
+
+  /* Headline Bold */
+  font-family: "Circular Std";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px;
+  /* 125% */
+  letter-spacing: 0.33px;
+}
+
+/* Description */
+.recommendation-description {
+  color: var(--Light-Foreground-Secondary, var(--Foreground-Secondary, #45484F));
+
+  /* Text Bold */
+  font-family: "Circular Std";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  /* 133.333% */
+  letter-spacing: 0.33px;
+
+  /* Limit to 3 lines with ellipsis */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 60px;
+  /* 3 lines * 20px line-height */
+}
+
+/* Impact section */
+.recommendation-impact {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 8px;
+}
+
+.impact-label {
+  color: var(--Light-Foreground-Placeholder, var(--Foreground-Placeholder, #878F9E));
+
+  /* Caption 2 Medium */
+  font-family: "Circular Std";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14px;
+  /* 116.667% */
+  letter-spacing: 0.33px;
+}
+
+.impact-text {
+  color: var(--Light-Foreground-Primary, var(--Foreground-Primary, #222325));
+
+  /* Caption 2 Regular */
+  font-family: "Circular Std";
+  font-size: 12px;
+  font-style: normal;
+  line-height: 14px;
+  /* 116.667% */
+  letter-spacing: 0.33px;
+}
+
+/* Button */
+.view-recommendation-btn {
+  margin-top: auto;
+  padding: 10px 16px;
+  background: var(--Button-SecondaryBackground, #E7EBFF);
+  color: #003da6;
+  border: none;
+  border-radius: 8px;
+  text-align: center;
+
+  /* Subhead Medium */
+  font-family: "Circular Std";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px;
+  /* 128.571% */
+  letter-spacing: 0.33px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  align-self: flex-start;
+}
+
+.view-recommendation-btn:hover {
+  background: #dce6ff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .recommendations-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 1200px) {
+  .recommendations-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .overview-recommendations {
+    padding: 16px;
+  }
+
+  .recommendations-title {
+    font-size: 18px;
+  }
+
+  .recommendation-card {
+    padding: 16px;
+  }
+
+  .recommendation-title {
+    font-size: 15px;
+  }
+
+  recommendation-description,
+  .impact-text {
+    font-size: 13px;
+  }
+
+  .priority-badge {
+    font-size: 11px;
+    padding: 3px 10px;
+  }
+
+  .timeline-badge {
+    font-size: 12px;
+  }
+}
+
+.formatted-recommendation .recommendation-section {
+  margin-bottom: 16px;
+}
+
+.formatted-recommendation .section-header {
+  color: #1e3a5f;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.formatted-recommendation .section-content {
+  margin-left: 12px;
+}
+
+.formatted-recommendation .bullet-section {
+  margin-bottom: 12px;
+}
+
+.formatted-recommendation .intro-text {
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.formatted-recommendation .bullet-list {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.formatted-recommendation .bullet-item {
+  margin-bottom: 4px;
+  color: #444;
+}
+
+.formatted-recommendation .numbered-section {
+  margin-bottom: 12px;
+}
+
+.formatted-recommendation .numbered-list {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.formatted-recommendation .numbered-item {
+  margin-bottom: 6px;
+  color: #444;
+  line-height: 1.5;
+}
+
+

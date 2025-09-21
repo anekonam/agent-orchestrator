@@ -1,0 +1,50 @@
+.key-insight-cards-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* Full width card (100%) */
+.key-insight-card-wrapper.full-width-card {
+  flex: 0 0 100%;
+  max-width: 100%;
+  display: flex;
+}
+
+/* Half width cards (50%) */
+.key-insight-card-wrapper.half-width-card {
+  flex: 0 0 calc(50% - 8px);
+  max-width: calc(50% - 8px);
+  display: flex;
+}
+
+/* Third width cards (33.33%) */
+.key-insight-card-wrapper.third-width-card {
+  flex: 0 0 calc(33.333% - 11px);
+  max-width: calc(33.333% - 11px);
+  display: flex;
+}
+
+/* Ensure cards stretch to full height of wrapper */
+.key-insight-card-wrapper > * {
+  flex: 1;
+  height: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  /* On medium screens, third-width becomes half-width */
+  .key-insight-card-wrapper.third-width-card {
+    flex: 0 0 calc(50% - 8px);
+    max-width: calc(50% - 8px);
+  }
+}
+
+@media (max-width: 768px) {
+  /* On small screens, all cards become full width */
+  .key-insight-card-wrapper.half-width-card,
+  .key-insight-card-wrapper.third-width-card {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
